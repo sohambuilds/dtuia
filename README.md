@@ -8,7 +8,18 @@ This project implements an intelligent repair agent that:
 - Analyzes defective Python programs from the QuixBugs dataset
 - Identifies single-line defects using pattern recognition and LLM analysis
 - Generates fixes based on 14 identified defect patterns
-- Validates repairs using the built-in test harness
+- Validates repairs using a comprehensive test framework
+- **Achieved 80.5% success rate** (33/41 programs) on the QuixBugs benchmark
+
+## Results Summary
+
+Our agent successfully repaired **33 out of 41** programs from QuixBugs:
+
+**✅ Successfully Fixed (33 programs):**
+bitcount, breadth_first_search, bucketsort, depth_first_search, detect_cycle, find_first_in_sorted, find_in_sorted, flatten, gcd, get_factors, hanoi, is_valid_parenthesization, kheapsort, knapsack, kth, lcs_length, levenshtein, longest_common_subsequence, mergesort, minimum_spanning_tree, next_palindrome, next_permutation, quicksort, reverse_linked_list, rpn_eval, shortest_path_length, shortest_path_lengths, shortest_paths, sieve, sqrt, to_base, topological_ordering, wrap
+
+**❌ Still Need Work (8 programs):**
+lis, max_sublist_sum, node, pascal, possible_change, powerset, shunting_yard, subsequences
 
 ## Defect Patterns
 
@@ -38,30 +49,43 @@ pip install uv
 
 2. Install dependencies:
 ```bash
-uv add google-generativeai pytest rich pydantic python-dotenv
+uv add google-generativeai pytest rich pydantic python-dotenv matplotlib seaborn pandas
 ```
 
 3. Set up environment variables:
 ```bash
-cp env.example .env
-# Edit .env and add your Gemini API key
+export GEMINI_API_KEY=your_api_key_here
 ```
 
 ## Usage
 
-### Repair a single program:
+### Repair Programs
+
+**Repair a single program:**
 ```bash
-uv run python repair_agent.py gcd
+cd Data && python ../repair_agent.py gcd
 ```
 
-### Repair all programs:
+**Repair all programs:**
 ```bash
-uv run python repair_agent.py
+python repair_agent.py
 ```
 
-### Test a repaired program:
+### Test Fixed Programs
+
+**Test a single fixed program:**
 ```bash
-uv run python test_single_repair.py gcd
+cd Data && python tester2.py bitcount
+```
+
+**Test all fixed programs with full analysis:**
+```bash
+cd Data && python tester2.py
+```
+
+**Generate visualizations from saved results:**
+```bash
+cd Data && python create_visualizations.py
 ```
 
 ## Project Structure
@@ -69,14 +93,19 @@ uv run python test_single_repair.py gcd
 ```
 .
 ├── Data/
-│   ├── python_programs/        # Defective programs
-│   ├── correct_python_programs/# Correct versions
-│   ├── fixed_programs/         # Our fixed versions
-│   ├── json_testcases/         # Test cases
-│   └── tester.py              # Test harness
+│   ├── python_programs/        # Original defective programs
+│   ├── correct_python_programs/# Reference correct versions
+│   ├── fixed_programs/         # Our repaired versions
+│   ├── json_testcases/         # Test cases for validation
+│   ├── results/                # Organized test results
+│   │   └── test_session_*/     # Timestamped test sessions
+│   ├── tester.py              # Original test harness
+│   ├── tester2.py             # Enhanced testing framework
+│   └── create_visualizations.py # Standalone visualization script
 ├── defect_patterns.py         # Defect pattern definitions
 ├── repair_agent.py            # Main repair agent
 ├── test_single_repair.py      # Single program test utility
+├── pyproject.toml            # Project dependencies
 └── README.md
 ```
 
@@ -84,20 +113,51 @@ uv run python test_single_repair.py gcd
 
 1. **Analysis**: The agent reads the defective program and runs tests to identify failures
 2. **Pattern Matching**: Using the 14 defect patterns, it provides context to the LLM
-3. **Repair Generation**: Gemini analyzes the code and generates a fix
-4. **Validation**: The fix is applied and tested using the QuixBugs test harness
-5. **Results**: Success rate and defect distribution are reported
+3. **Repair Generation**: Gemini-2.0-flash analyzes the code and generates a fix
+4. **Validation**: The fix is applied and tested using an enhanced test framework
+5. **Results**: Comprehensive results with visualizations are generated
 
-## Output
+## Output & Results
 
-The agent generates:
-- Fixed programs in `Data/fixed_programs/`
-- Detailed results in `repair_results.json`
-- Console output with success statistics and defect type distribution
+The system generates multiple output formats:
 
-## Performance
+**Fixed Programs:**
+- Repaired code in `Data/fixed_programs/`
+- Individual program results in JSON format
 
-The agent aims to achieve high success rates on the QuixBugs benchmark by:
-- Leveraging pattern recognition for common defect types
-- Using Gemini's code understanding capabilities
-- Validating all fixes against the test suite
+**Test Results (in `Data/results/test_session_*/`):**
+- `test_results.json` - Complete detailed results
+- `summary.json` - High-level statistics  
+- `successful_programs.txt` - List of successful repairs
+- `failed_programs.txt` - Analysis of failures
+- `test_results_visualization.png/pdf` - Comprehensive charts
+
+**Visualizations:**
+- Overall success rate pie chart (80.5% success)
+- Defect type distribution showing which patterns were most common
+- Success rate histogram with 80% threshold line
+- Test complexity vs success rate correlation
+- Summary statistics and perfect scores tracking
+
+## Performance Highlights
+
+- **80.5% Success Rate** on QuixBugs benchmark
+- **32 Perfect Scores** (100% test pass rate)
+- **Robust timeout handling** for complex algorithms
+- **Cross-platform compatibility** (Windows, macOS, Linux)
+- **Publication-ready visualizations** (300 DPI PNG + PDF)
+
+## Key Features
+
+- **Smart timeout handling** - Different timeouts for complex algorithms
+- **Comprehensive test validation** - Compares against reference implementations  
+- **Beautiful visualizations** - Multiple chart types with professional styling
+- **Organized results** - Timestamped sessions with multiple output formats
+- **Error analysis** - Detailed breakdown of failure modes
+- **Pattern-based repair** - Uses domain knowledge of common defect types
+
+## Development Notes
+
+The agent uses Gemini-2.0-flash for its strong code understanding capabilities. The testing framework includes timeout protection, cross-platform compatibility, and handles both regular programs and graph-based algorithms differently.
+
+Results are automatically organized into timestamped sessions for easy comparison and analysis across different runs.
