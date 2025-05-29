@@ -1,0 +1,18 @@
+Failed Programs Analysis:
+==============================
+• lis: failed
+
+• max_sublist_sum: failed
+
+• node: missing_tests
+
+• pascal: failed
+
+• possible_change: failed
+
+• powerset: failed
+
+• shunting_yard: failed
+
+• subsequences: failed
+

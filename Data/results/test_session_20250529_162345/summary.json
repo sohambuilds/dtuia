@@ -1,0 +1,8 @@
+{
+  "timestamp": "2025-05-29T16:26:59.566337",
+  "total_programs": 41,
+  "successful": 33,
+  "failed": 8,
+  "success_rate": 0.8048780487804879,
+  "average_test_success_rate": 0.8447154471544716
+}

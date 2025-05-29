@@ -1,0 +1,35 @@
+Successfully Fixed Programs:
+==============================
+• bitcount
+• breadth_first_search
+• bucketsort
+• depth_first_search
+• detect_cycle
+• find_first_in_sorted
+• find_in_sorted
+• flatten
+• gcd
+• get_factors
+• hanoi
+• is_valid_parenthesization
+• kheapsort
+• knapsack
+• kth
+• lcs_length
+• levenshtein
+• longest_common_subsequence
+• mergesort
+• minimum_spanning_tree
+• next_palindrome
+• next_permutation
+• quicksort
+• reverse_linked_list
+• rpn_eval
+• shortest_path_length
+• shortest_path_lengths
+• shortest_paths
+• sieve
+• sqrt
+• to_base
+• topological_ordering
+• wrap
