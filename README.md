@@ -141,6 +141,8 @@ The system generates multiple output formats:
 
 ## Performance Highlights
 
+We altered the original test harness to be compatible with Windows and work without issues. 
+
 - **80.5% Success Rate** on QuixBugs benchmark
 - **32 Perfect Scores** (100% test pass rate)
 - **Robust timeout handling** for complex algorithms
